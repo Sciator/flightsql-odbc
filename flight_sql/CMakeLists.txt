@@ -3,7 +3,7 @@
 # See "LICENSE" for license information.
 #
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.16)
 set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -114,13 +114,16 @@ else()
 endif()
 
 set(ARROW_GIT_REPOSITORY "https://github.com/apache/arrow.git" CACHE STRING "Arrow repository path or URL")
-set(ARROW_GIT_TAG "b050bd0d31db6412256cec3362c0d57c9732e1f2" CACHE STRING "Tag for the Arrow repository")
+set(ARROW_GIT_TAG "b7d2f7ffca66c868bd2fce5b3749c6caa002a7f0" CACHE STRING "Tag for the Arrow repository")
 
 message("Using Arrow from ${ARROW_GIT_REPOSITORY} on tag ${ARROW_GIT_TAG}")
 ExternalProject_Add(ApacheArrow
   GIT_REPOSITORY ${ARROW_GIT_REPOSITORY}
   GIT_TAG ${ARROW_GIT_TAG}
-  CMAKE_ARGS ${ARROW_CMAKE_ARGS})
+  CMAKE_ARGS ${ARROW_CMAKE_ARGS}
+  SOURCE_SUBDIR cpp
+  CMAKE_ARGS "-Dxsimd_SOURCE=BUNDLED"
+  )
 
 include_directories(BEFORE ${CMAKE_CURRENT_BINARY_DIR}/ApacheArrow-prefix/src/ApacheArrow-install/include)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
