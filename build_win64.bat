@@ -28,7 +28,7 @@
 
 @ECHO OFF
 
-%VCPKG_ROOT%\vcpkg.exe install --triplet x64-windows --x-install-root=%VCPKG_ROOT%/installed
+"%VCPKG_ROOT%\vcpkg.exe" install --triplet x64-windows --x-install-root="%VCPKG_ROOT%/installed"
 
 if exist ".\build" del build /q
 
@@ -40,7 +40,7 @@ if NOT DEFINED ARROW_GIT_REPOSITORY SET ARROW_GIT_REPOSITORY = "https://github.c
 
 cmake ..^
     -DARROW_GIT_REPOSITORY=%ARROW_GIT_REPOSITORY%^
-    -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake^
+    -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake"^
     -DVCPKG_TARGET_TRIPLET=x64-windows^
     -DVCPKG_MANIFEST_MODE=OFF^
     -G"Visual Studio 17 2022"^
