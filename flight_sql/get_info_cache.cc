@@ -167,15 +167,18 @@ uint32_t GetCvtBitForArrowConvertEntry(int32_t convert_entry) {
   return 0;
 }
 
-inline int32_t ScalarToInt32(arrow::UnionScalar *scalar) {
+// TODO: changed from arrow::UnionScalar, maybe should be other type
+inline int32_t ScalarToInt32(arrow::DenseUnionScalar *scalar) {
   return reinterpret_cast<arrow::Int32Scalar *>(scalar->value.get())->value;
 }
 
-inline int64_t ScalarToInt64(arrow::UnionScalar *scalar) {
+// TODO: changed from arrow::UnionScalar, maybe should be other type
+inline int64_t ScalarToInt64(arrow::DenseUnionScalar *scalar) {
   return reinterpret_cast<arrow::Int64Scalar *>(scalar->value.get())->value;
 }
 
-inline std::string ScalarToBoolString(arrow::UnionScalar *scalar) {
+// TODO: changed from arrow::UnionScalar, maybe should be other type
+inline std::string ScalarToBoolString(arrow::DenseUnionScalar *scalar) {
   return reinterpret_cast<arrow::BooleanScalar *>(scalar->value.get())->value ? "Y" : "N";
 }
 
@@ -305,8 +308,9 @@ bool GetInfoCache::LoadInfoFromServer() {
           ThrowIfNotOK(result_scalar.status());
           std::shared_ptr<arrow::Scalar> scalar_ptr =
               result_scalar.ValueOrDie();
-          arrow::UnionScalar *scalar =
-              reinterpret_cast<arrow::UnionScalar *>(scalar_ptr.get());
+          // TODO: changed from arrow::UnionScalar, maybe should be other type
+          arrow::DenseUnionScalar *scalar =
+              reinterpret_cast<arrow::DenseUnionScalar *>(scalar_ptr.get());
           switch (info_type) {
           // String properties
           case SqlInfoOptions::FLIGHT_SQL_SERVER_NAME: {

@@ -264,9 +264,12 @@ public:
     return Status::NotImplemented("Cannot convert DictionaryScalar to JSON.");
   }
 
-  Status Visit(const SparseUnionScalar &scalar) override {
-    return scalar.value->Accept(this);
-  }
+  // TODO: !!
+  #pragma message ("not implemented Visit(const SparseUnionScalar &scalar)")
+  // Status Visit(const SparseUnionScalar &scalar) override {
+  //   // return scalar.value->Accept(this);
+  //   return Status::OK();
+  // }
 
   Status Visit(const DenseUnionScalar &scalar) override {
     return scalar.value->Accept(this);
