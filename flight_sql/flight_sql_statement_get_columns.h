@@ -8,14 +8,12 @@
 #include <arrow/array/builder_binary.h>
 #include <arrow/array/builder_primitive.h>
 #include <arrow/status.h>
-#include <arrow/util/optional.h>
 #include <odbcabstraction/types.h>
 
 namespace driver {
 namespace flight_sql {
 
 using odbcabstraction::MetadataSettings;
-using arrow::util::optional;
 
 class GetColumns_RecordBatchBuilder {
 private:
@@ -43,21 +41,21 @@ private:
 
 public:
   struct Data {
-    optional<std::string> table_cat;
-    optional<std::string> table_schem;
+    std::optional<std::string> table_cat;
+    std::optional<std::string> table_schem;
     std::string table_name;
     std::string column_name;
     std::string type_name;
-    optional<int32_t> column_size;
-    optional<int32_t> buffer_length;
-    optional<int16_t> decimal_digits;
-    optional<int16_t> num_prec_radix;
-    optional<std::string> remarks;
-    optional<std::string> column_def;
+    std::optional<int32_t> column_size;
+    std::optional<int32_t> buffer_length;
+    std::optional<int16_t> decimal_digits;
+    std::optional<int16_t> num_prec_radix;
+    std::optional<std::string> remarks;
+    std::optional<std::string> column_def;
     int16_t sql_data_type{};
-    optional<int16_t> sql_datetime_sub;
-    optional<int32_t> char_octet_length;
-    optional<std::string> is_nullable;
+    std::optional<int16_t> sql_datetime_sub;
+    std::optional<int32_t> char_octet_length;
+    std::optional<std::string> is_nullable;
     int16_t data_type;
     int16_t nullable;
     int32_t ordinal_position;
@@ -75,7 +73,7 @@ class GetColumns_Transformer : public RecordBatchTransformer {
 private:
   const MetadataSettings& metadata_settings_;
   odbcabstraction::OdbcVersion odbc_version_;
-  optional<std::string> column_name_pattern_;
+  std::optional<std::string> column_name_pattern_;
 
 public:
   explicit GetColumns_Transformer(const MetadataSettings& metadata_settings,

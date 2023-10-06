@@ -16,7 +16,6 @@ namespace driver {
 namespace flight_sql {
 
 using arrow::internal::checked_pointer_cast;
-using arrow::util::nullopt;
 
 GetTypeInfoReader::GetTypeInfoReader(std::shared_ptr<RecordBatch> record_batch)
     : record_batch_(std::move(record_batch)), current_row_(-1) {}
@@ -44,7 +43,7 @@ optional<int32_t> GetTypeInfoReader::GetColumnSize() {
           checked_pointer_cast<Int32Array>(record_batch_->column(2));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetView(current_row_);
 }
@@ -54,7 +53,7 @@ optional<std::string> GetTypeInfoReader::GetLiteralPrefix() {
           checked_pointer_cast<StringArray>(record_batch_->column(3));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetString(current_row_);
 }
@@ -64,7 +63,7 @@ optional<std::string> GetTypeInfoReader::GetLiteralSuffix() {
           checked_pointer_cast<StringArray>(record_batch_->column(4));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetString(current_row_);
 }
@@ -74,7 +73,7 @@ optional<std::vector<std::string>> GetTypeInfoReader::GetCreateParams() {
           checked_pointer_cast<ListArray>(record_batch_->column(5));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   int values_length = array->value_length(current_row_);
   int start_offset = array->value_offset(current_row_);
@@ -114,7 +113,7 @@ optional<bool> GetTypeInfoReader::GetUnsignedAttribute() {
           checked_pointer_cast<BooleanArray>(record_batch_->column(9));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetView(current_row_);
 }
@@ -131,7 +130,7 @@ optional<bool> GetTypeInfoReader::GetAutoIncrement() {
           checked_pointer_cast<BooleanArray>(record_batch_->column(11));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetView(current_row_);
 }
@@ -141,7 +140,7 @@ optional<std::string> GetTypeInfoReader::GetLocalTypeName() {
           checked_pointer_cast<StringArray>(record_batch_->column(12));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetString(current_row_);
 }
@@ -151,7 +150,7 @@ optional<int32_t> GetTypeInfoReader::GetMinimumScale() {
           checked_pointer_cast<Int32Array>(record_batch_->column(13));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetView(current_row_);
 }
@@ -161,7 +160,7 @@ optional<int32_t> GetTypeInfoReader::GetMaximumScale() {
           checked_pointer_cast<Int32Array>(record_batch_->column(14));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetView(current_row_);
 }
@@ -178,7 +177,7 @@ optional<int32_t> GetTypeInfoReader::GetDatetimeSubcode() {
           checked_pointer_cast<Int32Array>(record_batch_->column(16));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetView(current_row_);
 }
@@ -188,7 +187,7 @@ optional<int32_t> GetTypeInfoReader::GetNumPrecRadix() {
           checked_pointer_cast<Int32Array>(record_batch_->column(17));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetView(current_row_);
 }
@@ -198,7 +197,7 @@ optional<int32_t> GetTypeInfoReader::GetIntervalPrecision() {
           checked_pointer_cast<Int32Array>(record_batch_->column(18));
 
   if (array->IsNull(current_row_))
-    return nullopt;
+    return std::nullopt;
 
   return array->GetView(current_row_);
 }

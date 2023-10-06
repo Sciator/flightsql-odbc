@@ -15,9 +15,6 @@ namespace driver {
 namespace flight_sql {
 
 using arrow::flight::sql::ColumnMetadata;
-using arrow::util::make_optional;
-using arrow::util::nullopt;
-using arrow::util::optional;
 
 namespace {
 std::shared_ptr<Schema> GetColumns_V3_Schema() {
@@ -78,8 +75,8 @@ Transform_inner(const odbcabstraction::OdbcVersion odbc_version,
 
   optional<boost::xpressive::sregex> column_name_regex =
       column_name_pattern
-          ? make_optional(ConvertSqlPatternToRegex(*column_name_pattern))
-          : nullopt;
+          ? std::make_optional(ConvertSqlPatternToRegex(*column_name_pattern))
+          : std::nullopt;
 
   while (reader.Next()) {
     const auto &table_catalog = reader.GetCatalogName();
@@ -123,8 +120,8 @@ Transform_inner(const odbcabstraction::OdbcVersion odbc_version,
 
       const Result<int32_t> &precision_result = metadata.GetPrecision();
       data.column_size = precision_result.ok()
-                             ? make_optional(precision_result.ValueOrDie())
-                             : nullopt;
+                             ? std::make_optional(precision_result.ValueOrDie())
+                             : std::nullopt;
       data.char_octet_length =
           GetCharOctetLength(data_type_v3, precision_result);
 
@@ -132,12 +129,12 @@ Transform_inner(const odbcabstraction::OdbcVersion odbc_version,
 
       const Result<int32_t> &scale_result = metadata.GetScale();
       data.decimal_digits = scale_result.ok()
-                                ? make_optional(scale_result.ValueOrDie())
-                                : nullopt;
+                                ? std::make_optional(scale_result.ValueOrDie())
+                                : std::nullopt;
       data.num_prec_radix = GetRadixFromSqlDataType(data_type_v3);
       data.nullable = field->nullable();
-      data.remarks = nullopt;
-      data.column_def = nullopt;
+      data.remarks = std::nullopt;
+      data.column_def = std::nullopt;
       data.sql_data_type = GetNonConciseDataType(data_type_v3);
       data.sql_datetime_sub = GetSqlDateTimeSubCode(data_type_v3);
       data.ordinal_position = i + 1;
@@ -235,7 +232,7 @@ GetColumns_Transformer::GetColumns_Transformer(
     : metadata_settings_(metadata_settings),
       odbc_version_(odbc_version),
       column_name_pattern_(
-          column_name_pattern ? make_optional(*column_name_pattern) : nullopt) {
+          column_name_pattern ? std::make_optional(*column_name_pattern) : std::nullopt) {
 }
 
 std::shared_ptr<RecordBatch> GetColumns_Transformer::Transform(

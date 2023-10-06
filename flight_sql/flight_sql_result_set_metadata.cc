@@ -20,8 +20,6 @@ namespace flight_sql {
 using namespace odbcabstraction;
 using arrow::DataType;
 using arrow::Field;
-using arrow::util::make_optional;
-using arrow::util::nullopt;
 
 constexpr int32_t DefaultDecimalPrecision = 38;
 

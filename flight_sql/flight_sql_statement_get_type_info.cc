@@ -14,10 +14,6 @@
 namespace driver {
 namespace flight_sql {
 
-using arrow::util::make_optional;
-using arrow::util::nullopt;
-using arrow::util::optional;
-
 namespace {
 std::shared_ptr<Schema> GetTypeInfo_V3_Schema() {
   return schema({
@@ -97,7 +93,7 @@ Transform_inner(const odbcabstraction::OdbcVersion odbc_version,
     if (create_params) {
       data.create_params = boost::algorithm::join(*create_params, ",");
     } else {
-      data.create_params = nullopt;
+      data.create_params = std::nullopt;
     }
 
     data.nullable = reader.GetNullable() ? odbcabstraction::NULLABILITY_NULLABLE : odbcabstraction::NULLABILITY_NO_NULLS;
